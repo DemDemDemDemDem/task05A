@@ -5,6 +5,8 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import com.example.logic.StudentGame
 
@@ -23,6 +25,8 @@ class GameView: View {
 
     private var mGridPaint: Paint
     private var mNoPlayerPaint: Paint
+
+    private val myGestureDetector = GestureDetector(context, myGestureListener())
 
     init {
         mGridPaint = Paint().apply {
@@ -93,6 +97,36 @@ class GameView: View {
             }
 
     }
+    override fun onTouchEvent(ev: MotionEvent): Boolean {
+        return myGestureDetector.onTouchEvent(ev) || super.onTouchEvent(ev)
+    }
+    inner class myGestureListener: GestureDetector.SimpleOnGestureListener() {
 
+        //You should always include onDown( and it should always return true.
+        //Otherwise the GestureListener may ignore other events.
+        override fun onDown(ev: MotionEvent): Boolean {
+            return true
+        }
 
+        override fun onSingleTapUp(ev: MotionEvent): Boolean {
+
+           var turn = mStudentGame.playerTurn
+
+            //Work out the width of each column in pixels
+            val colWidth = width/colCount
+
+            //Calculate the column number from the x co-ordinate of the touch event
+            var colTouch = ev.x.toInt()/colWidth
+
+            //Tell the game logic that the user has chosen a column
+            mStudentGame.playToken(colTouch, turn)
+            //Refresh the screen display
+            invalidate()
+            return true
+        }
+    }
+
+    companion object { // declare a constant (must be in the companion)
+        const val LOGTAG = "MyTask"
+    }
 }
