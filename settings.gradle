@@ -1,2 +1,3 @@
 rootProject.name='task05A'
 include ':app'
+include ':lib'
