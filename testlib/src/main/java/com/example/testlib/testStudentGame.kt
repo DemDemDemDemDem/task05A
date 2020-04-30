@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 
 public class testStudentGame {
-    lateinit var defaultStudentGame: StudentGame
+      lateinit var defaultStudentGame: StudentGame
 
     @BeforeEach
     fun createTestGrid() {
