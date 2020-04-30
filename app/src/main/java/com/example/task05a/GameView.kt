@@ -50,8 +50,23 @@ class GameView: View {
         else
             chosenDiameter = diameterY
 
+        //Draw the game board
+        canvas.drawRect(0.toFloat(), 0.toFloat(), viewWidth, viewHeight, mGridPaint)
 
+        val radius = chosenDiameter / 2
 
+        //Draw the circles on the game board
+        for (col in 0 until colCount)
+            for (row in 0 until rowCount) {
+
+                paint = mNoPlayerPaint
+
+                //Calculate the co-ordinates of the circles
+                val cx = chosenDiameter * col + radius
+                val cy = chosenDiameter * row + radius
+
+                canvas.drawCircle(cx, cy, radius, paint)
+            }
 
     }
 
